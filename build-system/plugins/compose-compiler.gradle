@@ -1,0 +1,10 @@
+// Configure the composeCompiler extension if it exists
+// Using Groovy DSL which has more lenient dynamic property access
+project.afterEvaluate {
+    if (project.extensions.findByName('composeCompiler') != null) {
+        project.composeCompiler {
+            reportsDestination = project.layout.buildDirectory.dir("compose_compiler").get().asFile
+            metricsDestination = project.layout.buildDirectory.dir("compose_compiler").get().asFile
+        }
+    }
+}

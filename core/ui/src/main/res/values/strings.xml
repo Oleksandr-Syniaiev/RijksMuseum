@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_menu_item_tab1">Today</string>
+    <string name="app_menu_item_tab2">Forecast</string>
+    <string name="app_menu_item_tab3">Locations</string>
+    <string name="app_menu_item_tab4">Settings</string>
+    <string name="app_toolbar_details">Details</string>
+</resources>

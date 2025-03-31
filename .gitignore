@@ -1,0 +1,33 @@
+# generated files
+bin/
+gen/
+build/
+
+# Java class files
+*.class
+
+# files for the dex VM
+*.dex
+
+# Eclipse project files
+.classpath
+.project
+
+# Android Studio
+.idea/
+.kotlin/
+.gradle
+/*/local.properties
+/local.properties
+local.properties
+/*/out
+/*/*/build
+/*/*/production
+*.iml
+.DS_Store
+/captures
+.externalNativeBuild
+.cxx
+
+# Room
+/*/*/schemas

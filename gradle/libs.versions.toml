@@ -1,0 +1,121 @@
+[versions]
+compileSdk = "35"
+minSdk = "31"
+targetSdk = "35"
+
+agp = "8.9.1"
+kotlin = "2.0.20"
+core-ktx = "1.15.0"
+kotlin-ksp = "2.0.20-1.0.25"
+coroutines = "1.9.0"
+serialization = "1.7.3"
+
+lifecycle-runtime-ktx = "2.8.7"
+activity-compose = "1.10.1"
+navigation-compose = "2.8.9"
+compose-bom = "2025.03.01"
+accompanist-compose = "0.30.1"
+
+material = "1.12.0"
+splashscreen = "1.0.1"
+appcompat = "1.7.0"
+
+androidx-hilt-compose-navigation = "1.2.0"
+hilt = "2.56.1"
+javax = "1"
+
+retrofit = "2.11.0"
+okhttp3-logging-interceptor = "4.12.0"
+
+coil = "2.6.0"
+
+timber = "5.0.1"
+
+espresso-core = "3.6.1"
+junit = "4.13.2"
+androidx-test-ext-junit = "1.2.1"
+mockito-kotlin = "5.4.0"
+mockito-core = "5.12.0"
+mockk = "1.13.14"
+
+gradle-ktlint = "12.0.3"
+ktlint-ruleset-compose = "0.0.26"
+ktlint-ruleset-standart = "1.1.0"
+
+detekt = "1.23.7"
+playServicesLocation = "21.3.0"
+
+[libraries]
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime-ktx" }
+activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
+androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose" }
+splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
+ui = { group = "androidx.compose.ui", name = "ui" }
+ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+
+androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidx-hilt-compose-navigation" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+
+compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+compose-material = { group = "androidx.compose.material", name = "material" }
+accompanist-compose-placeholder = { group = "com.google.accompanist", name = "accompanist-placeholder-material", version.ref = "accompanist-compose" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+
+javax = {group = "javax.inject", name = "javax.inject", version.ref = "javax"}
+
+timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
+
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+okhttp3-logging-interceptor = {  group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp3-logging-interceptor" }
+
+detekt-ruleset-compose = {group = "com.twitter.compose.rules", name = "detekt", version.ref = "ktlint-ruleset-compose" }
+
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+kotlin-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito-kotlin" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito-core" }
+test-mockk = {group = "io.mockk", name = "mockk", version.ref = "mockk" }
+
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
+# Dependencies of the included build system
+android-gradle-plugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+
+
+[plugins]
+com-android-application = { id = "com.android.application", version.ref = "agp" }
+com-android-library = { id = "com.android.library", version.ref = "agp" }
+org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "kotlin-ksp" }
+gradle-ktlint = {id = "org.jlleitschuh.gradle.ktlint", version.ref = "gradle-ktlint"}
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+detekt-core = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt"}
+# Serialization
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+# Custom plugins
+base-library-kotlin = { id = "base.library.kotlin", version = "unspecified" }
+base-library-android = { id = "base.library.android", version = "unspecified" }
+base-application = { id = "base.application", version = "unspecified" }
+base-compose-compiler = { id = "base.compose.compiler", version = "unspecified" }
+
+[bundles]
