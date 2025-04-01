@@ -9,11 +9,11 @@ interface RemoteMuseumDataSource {
     suspend fun getListOfArts(
         page: Int,
         pageSize: Int,
-        lang: String
+        lang: String,
     ): SealedResult<List<UiArtsObject>, DataError>
 
     suspend fun getArtDetails(
         artId: String,
-        lang: String
+        lang: String,
     ): SealedResult<UiArtDetails, DataError>
 }

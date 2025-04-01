@@ -26,7 +26,7 @@ fun BaseToolbar(
             Text(
                 text = title,
                 color = MaterialTheme.colorScheme.onPrimary,
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleLarge,
             )
         },
         actions = actions,

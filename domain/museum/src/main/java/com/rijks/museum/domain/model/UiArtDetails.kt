@@ -19,11 +19,13 @@ data class UiArtDetails(
         parcel.readString().orEmpty(),
         parcel.readString().orEmpty(),
         parcel.readString().orEmpty(),
-        parcel.readString().orEmpty()
-    ) {
-    }
+        parcel.readString().orEmpty(),
+    )
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
+    override fun writeToParcel(
+        parcel: Parcel,
+        flags: Int,
+    ) {
         parcel.writeString(id)
         parcel.writeString(title)
         parcel.writeString(longTitle)

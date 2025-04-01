@@ -18,31 +18,39 @@ import com.rijks.museum.core.ui.utils.EMPTY_STRING
 import com.rijks.museum.domain.model.UiArtsObject
 
 @Composable
-fun ItemContent(item: UiArtsObject, onItemClick: (String) -> Unit) {
+fun ItemContent(
+    item: UiArtsObject,
+    onItemClick: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .clickable(onClick = { onItemClick(item.objectNumber) }),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .clickable(onClick = { onItemClick(item.objectNumber) }),
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
         ) {
             RemoteIcon(
                 url = item.image,
                 description = item.title,
-                modifier = Modifier
-                    .size(128.dp)
-                    .padding(8.dp)
+                modifier =
+                    Modifier
+                        .size(128.dp)
+                        .padding(8.dp),
             )
             Text(
                 text = item.title,
                 color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
             )
         }
         HorizontalDivider()
@@ -53,13 +61,14 @@ fun ItemContent(item: UiArtsObject, onItemClick: (String) -> Unit) {
 @Composable
 fun ItemContentPreview() {
     ItemContent(
-        item = UiArtsObject(
-            id = "1",
-            title = "The Night Watch",
-            image = EMPTY_STRING,
-            author = "Author Name",
-            objectNumber = EMPTY_STRING
-        ),
-        onItemClick = {}
+        item =
+            UiArtsObject(
+                id = "1",
+                title = "The Night Watch",
+                image = EMPTY_STRING,
+                author = "Author Name",
+                objectNumber = EMPTY_STRING,
+            ),
+        onItemClick = {},
     )
 }

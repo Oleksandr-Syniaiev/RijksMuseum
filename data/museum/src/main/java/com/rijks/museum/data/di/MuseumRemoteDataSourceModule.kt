@@ -12,7 +12,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 
-
 @Module
 @InstallIn(SingletonComponent::class)
 class MuseumRemoteDataSourceModule {
@@ -25,21 +24,25 @@ class MuseumRemoteDataSourceModule {
     fun providesOkHttpClient(): OkHttpClient {
         var builder = OkHttpClient.Builder()
         if (BuildConfig.DEBUG) {
-            builder = builder
-                .addInterceptor(
-                    HttpLoggingInterceptor().also {
-                        it.level = HttpLoggingInterceptor.Level.BODY
-                    },
-                )
+            builder =
+                builder
+                    .addInterceptor(
+                        HttpLoggingInterceptor().also {
+                            it.level = HttpLoggingInterceptor.Level.BODY
+                        },
+                    )
         }
         return builder
             .addInterceptor { chain ->
-                val url = chain.request().url.newBuilder()
-                    .addQueryParameter(KEY_PARAMETER, BuildConfig.API_KEY)
-                    .build()
+                val url =
+                    chain.request().url.newBuilder()
+                        .addQueryParameter(KEY_PARAMETER, BuildConfig.API_KEY)
+                        .build()
 
                 val request =
-                    chain.request().newBuilder().url(url).build()
+                    chain.request().newBuilder()
+                        .url(url)
+                        .build()
 
                 chain.proceed(request)
             }
@@ -49,8 +52,11 @@ class MuseumRemoteDataSourceModule {
     @Provides
     @Named("museumRetrofit")
     fun providesRetrofit(client: OkHttpClient): Retrofit {
-        return Retrofit.Builder().baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create()).client(client).build()
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
+            .build()
     }
 
     @Provides

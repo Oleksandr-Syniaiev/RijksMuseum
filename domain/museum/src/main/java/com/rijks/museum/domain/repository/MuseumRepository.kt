@@ -11,7 +11,5 @@ interface MuseumRepository {
         page: Int,
     ): SealedResult<List<UiArtsObject>, DataError>
 
-    suspend fun getArtDetails(
-        objectNumber: String,
-    ): SealedResult<UiArtDetails, DataError>
+    suspend fun getArtDetails(objectNumber: String): SealedResult<UiArtDetails, DataError>
 }

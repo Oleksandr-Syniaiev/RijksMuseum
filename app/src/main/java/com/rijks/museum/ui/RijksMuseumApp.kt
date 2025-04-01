@@ -18,11 +18,12 @@ fun RijksMuseumApp(navigator: Navigator) {
 
     ObserveAsEvents(flow = navigator.navigationActions) { action ->
         when (action) {
-            is NavigationAction.Navigate -> navController.navigate(
-                action.destination
-            ) {
-                action.navOptions(this)
-            }
+            is NavigationAction.Navigate ->
+                navController.navigate(
+                    action.destination,
+                ) {
+                    action.navOptions(this)
+                }
 
             NavigationAction.NavigateUp -> navController.navigateUp()
         }

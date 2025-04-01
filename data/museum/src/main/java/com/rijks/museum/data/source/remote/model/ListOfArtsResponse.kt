@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class ListOfArtsResponse(
     @SerializedName("artObjects")
-    val artObjects: List<ArtObject>
+    val artObjects: List<ArtObject>,
 )

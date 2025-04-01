@@ -27,12 +27,12 @@ fun BaseToolbar(
             Text(
                 text = title,
                 color = MaterialTheme.colorScheme.onSecondary,
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleLarge,
             )
         },
         actions = actions,
         colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primary),
-        navigationIcon = navigationIcon
+        navigationIcon = navigationIcon,
     )
 }
 

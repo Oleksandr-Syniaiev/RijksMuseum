@@ -6,7 +6,6 @@ import com.rijks.museum.domain.model.UiArtDetails
 
 @Stable
 sealed class ArtDetailsScreenEvents {
-
     data class Loading(val objectNumber: String) : ArtDetailsScreenEvents()
 
     data class Loaded(val model: UiArtDetails) : ArtDetailsScreenEvents()
@@ -16,5 +15,4 @@ sealed class ArtDetailsScreenEvents {
     data object Back : ArtDetailsScreenEvents()
 
     data object HideError : ArtDetailsScreenEvents()
-
 }

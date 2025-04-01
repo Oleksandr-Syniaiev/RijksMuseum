@@ -36,10 +36,10 @@ import com.rijks.museum.core.ui.utils.tools.rememberSaveableLazyListState
 import com.rijks.museum.core.utils.errors.DataError
 import com.rijks.museum.domain.model.UiArtsObject
 
+private const val PAGINATION_START_OFFSET = 3
+
 @Composable
-fun ListOfArtsScreen(
-    viewModel: ListOfArtsViewModel = hiltViewModel(),
-) {
+fun ListOfArtsScreen(viewModel: ListOfArtsViewModel = hiltViewModel()) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     LisOfArtsScreenContent(
         state = state,
@@ -62,10 +62,15 @@ private fun LisOfArtsScreenContent(
             if (state.error != null && !state.error.isPagingError) {
                 LoadingError(
                     error = state.error.dataError,
-                    onClick = { onEvent(ListOfArtsScreenEvents.Loading) }
+                    onClick = { onEvent(ListOfArtsScreenEvents.Loading) },
                 )
             } else {
-                GroupedListContent(state, onEvent, modifier, contentPadding)
+                GroupedListContent(
+                    state = state,
+                    onEvent = onEvent,
+                    modifier = modifier,
+                    contentPadding = contentPadding,
+                )
             }
         }
     }
@@ -76,8 +81,8 @@ private fun LisOfArtsScreenContent(
 private fun GroupedListContent(
     state: ListOfArtsScreenState,
     onEvent: (ListOfArtsScreenEvents) -> Unit,
-    modifier: Modifier,
-    contentPadding: PaddingValues
+    contentPadding: PaddingValues,
+    modifier: Modifier = Modifier,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         val lazyListState = rememberSaveableLazyListState()
@@ -86,15 +91,20 @@ private fun GroupedListContent(
                 val lastVisibleItemIndex = lazyListState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
                 val totalItemsCount = lazyListState.layoutInfo.totalItemsCount
 
-                val value = (lastVisibleItemIndex >= totalItemsCount - 3
-                    && totalItemsCount > 0)
+                val value = (
+                    lastVisibleItemIndex >= totalItemsCount - PAGINATION_START_OFFSET &&
+                        totalItemsCount > 0
+                )
                 value
             }
         }
         LaunchedEffect(scrolledToEnd) {
-            if (scrolledToEnd &&
+            val isNotLoading =
                 !state.loadingState.isLoadingMore &&
-                !state.loadingState.isFullLoading &&
+                    !state.loadingState.isFullLoading
+            if (
+                scrolledToEnd &&
+                isNotLoading &&
                 !state.pagingState.endReached
             ) {
                 onEvent(LoadMore)
@@ -104,7 +114,7 @@ private fun GroupedListContent(
         LazyColumn(
             state = lazyListState,
             modifier = modifier,
-            contentPadding = contentPadding
+            contentPadding = contentPadding,
         ) {
             state.content.items.forEach { (author, listOfItems) ->
                 stickyHeader(key = author) {
@@ -115,7 +125,7 @@ private fun GroupedListContent(
                         listItem,
                         onItemClick = { id ->
                             onEvent(ListOfArtsScreenEvents.ItemClicked(id))
-                        }
+                        },
                     )
                 }
             }
@@ -130,7 +140,7 @@ private fun GroupedListContent(
                     PagingErrorItem(
                         onClick = {
                             onEvent(LoadMore)
-                        }
+                        },
                     )
                 }
             }
@@ -143,41 +153,43 @@ private fun GroupedListContent(
 fun LisOfArtsScreenContentPreview() {
     RijksMuseumAppTheme {
         LisOfArtsScreenContent(
-            state = ListOfArtsScreenState(
-                content = ComposeMap(
-                    mapOf(
-                        "Rembrandt" to listOf(
-                            UiArtsObject(
-                                id = "1",
-                                title = "The Night Watch",
-                                image = EMPTY_STRING,
-                                author = "Rembrandt",
-                                objectNumber = EMPTY_STRING
+            state =
+                ListOfArtsScreenState(
+                    content =
+                        ComposeMap(
+                            mapOf(
+                                "Rembrandt" to
+                                    listOf(
+                                        UiArtsObject(
+                                            id = "1",
+                                            title = "The Night Watch",
+                                            image = EMPTY_STRING,
+                                            author = "Rembrandt",
+                                            objectNumber = EMPTY_STRING,
+                                        ),
+                                        UiArtsObject(
+                                            id = "2",
+                                            title = "The Night Watch 2",
+                                            image = EMPTY_STRING,
+                                            author = "Rembrandt",
+                                            objectNumber = EMPTY_STRING,
+                                        ),
+                                    ),
+                                "Van Gogh" to
+                                    listOf(
+                                        UiArtsObject(
+                                            id = "3",
+                                            title = "Starry Night",
+                                            image = EMPTY_STRING,
+                                            author = "Van Gogh",
+                                            objectNumber = EMPTY_STRING,
+                                        ),
+                                    ),
                             ),
-                            UiArtsObject(
-                                id = "2",
-                                title = "The Night Watch 2",
-                                image = EMPTY_STRING,
-                                author = "Rembrandt",
-                                objectNumber = EMPTY_STRING
-                            )
-
                         ),
-                        "Van Gogh" to listOf(
-                            UiArtsObject(
-                                id = "3",
-                                title = "Starry Night",
-                                image = EMPTY_STRING,
-                                author = "Van Gogh",
-                                objectNumber = EMPTY_STRING
-                            )
-                        )
-                    )
+                    error = ErrorState(dataError = DataError.Network.NO_INTERNET, isPagingError = true),
                 ),
-                error = ErrorState(dataError = DataError.Network.NO_INTERNET, isPagingError = true),
-
-                ),
-            onEvent = {}
+            onEvent = {},
         )
     }
 }

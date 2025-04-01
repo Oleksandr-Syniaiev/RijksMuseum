@@ -64,7 +64,7 @@ private fun ArtDetailsScreenContent(
             title = stringResource(R.string.toolbar_details_title),
             navigationIcon = {
                 NavigateBack { onEvent(Back) }
-            }
+            },
         )
     }) { contentPadding ->
         if (state.isLoading) {
@@ -82,41 +82,46 @@ private fun ArtDetailsScreenContent(
 @Composable
 private fun DetailsContent(
     contentPadding: PaddingValues,
-    state: ArtDetailsScreenState
+    state: ArtDetailsScreenState,
 ) {
     Column(
-        modifier = Modifier
-            .padding(contentPadding)
-            .fillMaxSize(),
+        modifier =
+            Modifier
+                .padding(contentPadding)
+                .fillMaxSize(),
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
         ) {
             RemoteIcon(
                 url = state.content.image,
                 description = state.content.description,
-                modifier = Modifier
-                    .size(128.dp)
-                    .padding(16.dp)
+                modifier =
+                    Modifier
+                        .size(128.dp)
+                        .padding(16.dp),
             )
             Column {
                 Text(
                     text = state.content.title,
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
                 )
 
                 Text(
                     text = state.content.subTitle,
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
                 )
             }
         }
@@ -125,17 +130,19 @@ private fun DetailsContent(
             text = state.content.longTitle,
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.onPrimary,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
         )
         Text(
             text = state.content.description,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onPrimary,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
         )
     }
 }
@@ -145,19 +152,21 @@ private fun DetailsContent(
 private fun ArtDetailsScreenContentPreview() {
     RijksMuseumAppTheme {
         ArtDetailsScreenContent(
-            state = ArtDetailsScreenState(
-                content = UiArtDetails(
-                    id = "1",
-                    title = "Model of a Capstan",
-                    description = "Art Description",
-                    image = EMPTY_STRING,
-                    author = "Artist Name",
-                    subTitle = "h 25cm × w 25.5cm × d 25.5cm",
-                    longTitle = "Model of a Capstan, 's Lands Werf Amsterdam (possibly), 1794"
-                )
-            ),
+            state =
+                ArtDetailsScreenState(
+                    content =
+                        UiArtDetails(
+                            id = "1",
+                            title = "Model of a Capstan",
+                            description = "Art Description",
+                            image = EMPTY_STRING,
+                            author = "Artist Name",
+                            subTitle = "h 25cm × w 25.5cm × d 25.5cm",
+                            longTitle = "Model of a Capstan, 's Lands Werf Amsterdam (possibly), 1794",
+                        ),
+                ),
             onEvent = {},
-            artId = EMPTY_STRING
+            artId = EMPTY_STRING,
         )
     }
 }

@@ -24,15 +24,17 @@ fun RemoteIcon(
     modifier: Modifier = Modifier,
 ) {
     AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
-            .data(url)
-            .build(),
+        model =
+            ImageRequest.Builder(LocalContext.current)
+                .data(url)
+                .build(),
         contentDescription = description,
         contentScale = ContentScale.FillBounds,
         placeholder = ColorPainter(Color.DarkGray),
         error = rememberVectorPainter(Icons.NoImagePlaceholder),
-        modifier = modifier
-            .clip(RoundedCornerShape(16.dp)),
+        modifier =
+            modifier
+                .clip(RoundedCornerShape(16.dp)),
     )
 }
 
@@ -42,7 +44,8 @@ fun RemoteIconPreview() {
     RemoteIcon(
         url = EMPTY_STRING,
         description = EMPTY_STRING,
-        modifier = Modifier
-            .size(128.dp)
+        modifier =
+            Modifier
+                .size(128.dp),
     )
 }

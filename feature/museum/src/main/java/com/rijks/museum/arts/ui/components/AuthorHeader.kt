@@ -12,14 +12,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun AuthorHeader(author: String) {
+fun AuthorHeader(
+    author: String,
+    modifier: Modifier = Modifier,
+) {
     Text(
         text = author,
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.LightGray)
-            .padding(8.dp),
-        style = MaterialTheme.typography.titleMedium
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .background(Color.LightGray)
+                .padding(8.dp),
+        style = MaterialTheme.typography.titleMedium,
     )
 }
 

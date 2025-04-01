@@ -16,12 +16,16 @@ import com.rijks.museum.arts.R
 import com.rijks.museum.core.ui.theme.RijksMuseumAppTheme
 
 @Composable
-fun PagingErrorItem(onClick: () -> Unit = {}) {
+fun PagingErrorItem(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
+) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        horizontalAlignment = CenterHorizontally
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+        horizontalAlignment = CenterHorizontally,
     ) {
         Text(
             text = stringResource(R.string.pagination_failed_text),
@@ -30,14 +34,15 @@ fun PagingErrorItem(onClick: () -> Unit = {}) {
         )
         Button(
             onClick = onClick,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
         ) {
             Text(
                 text = stringResource(R.string.try_again_pagination_action_text),
                 color = MaterialTheme.colorScheme.onSecondary,
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge,
             )
         }
     }

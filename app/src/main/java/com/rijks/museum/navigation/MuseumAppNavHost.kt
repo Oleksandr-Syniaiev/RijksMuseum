@@ -19,7 +19,7 @@ fun MuseumAppNavHost(
         modifier = modifier,
         startDestination = Route.ArtsGraph,
     ) {
-        navigation<Route.ArtsGraph>(Route.ListOfArtsScreen){
+        navigation<Route.ArtsGraph>(Route.ListOfArtsScreen) {
             listOfArtsScreen()
             artsDetailsScreen()
         }

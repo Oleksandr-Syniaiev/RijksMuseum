@@ -7,5 +7,4 @@ interface TestConfig {
     val testDispatcher: TestDispatcher
 
     val testScope: TestScope
-
 }

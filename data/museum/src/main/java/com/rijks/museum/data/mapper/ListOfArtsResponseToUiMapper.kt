@@ -5,7 +5,6 @@ import com.rijks.museum.data.source.remote.model.ListOfArtsResponse
 import com.rijks.museum.domain.model.UiArtsObject
 
 object ListOfArtsResponseToUiMapper : Mapper<ListOfArtsResponse, List<UiArtsObject>> {
-
     override fun mapFrom(from: ListOfArtsResponse): List<UiArtsObject> =
         from.artObjects.map {
             UiArtsObject(
@@ -13,7 +12,7 @@ object ListOfArtsResponseToUiMapper : Mapper<ListOfArtsResponse, List<UiArtsObje
                 title = it.title,
                 image = it.webImage?.url.orEmpty(),
                 author = it.principalOrFirstMaker,
-                objectNumber = it.objectNumber
+                objectNumber = it.objectNumber,
             )
         }
 }

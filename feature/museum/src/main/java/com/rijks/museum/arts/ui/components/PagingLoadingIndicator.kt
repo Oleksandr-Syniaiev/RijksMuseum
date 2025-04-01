@@ -11,12 +11,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun PagingLoadingIndicator() {
+fun PagingLoadingIndicator(modifier: Modifier = Modifier) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        horizontalArrangement = Arrangement.Center
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+        horizontalArrangement = Arrangement.Center,
     ) {
         CircularProgressIndicator()
     }

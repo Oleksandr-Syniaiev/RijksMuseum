@@ -29,5 +29,4 @@ class ApplicationModule {
     @Provides
     @Singleton
     fun providesNavigator(): Navigator = DefaultNavigator(startDestination = Route.ListOfArtsScreen)
-
 }

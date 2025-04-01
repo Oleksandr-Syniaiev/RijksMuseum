@@ -24,101 +24,102 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ListOfArtsViewModel @Inject constructor(
-    val getListOfArtsUseCase: GetGroupedListOfArtsUseCase,
-    val reducer: ListOfArtsReducer,
-    private val navigator: Navigator,
-) : ViewModel(),
-    UiStateHolder<ListOfArtsScreenState> by DefaultUiStateHolder(
-        ListOfArtsScreenState(content = emptyComposeMap())
-    ) {
-
-    companion object {
-        private const val PAGE_SIZE = 20
-    }
-
-    init {
-        /**
-         * Trigger the loading event to fetch the initial data in case if state is lost
-         * for e.g. in case activity was destroyed and recreated.
-         * This was done instead of using savedStateHandle to restore the state because
-         * the size of the data could be large and we want to avoid TransactionTooLargeException
-         * due to Bundle size limit.
-         */
-        if (uiState.value.content.items.isEmpty()) {
-            onEvent(Loading)
+class ListOfArtsViewModel
+    @Inject
+    constructor(
+        val getListOfArtsUseCase: GetGroupedListOfArtsUseCase,
+        val reducer: ListOfArtsReducer,
+        private val navigator: Navigator,
+    ) : ViewModel(),
+        UiStateHolder<ListOfArtsScreenState> by DefaultUiStateHolder(
+            ListOfArtsScreenState(content = emptyComposeMap()),
+        ) {
+        companion object {
+            private const val PAGE_SIZE = 20
         }
-    }
 
-    fun onEvent(event: ListOfArtsScreenEvents) {
-        val reduced = reducer(event)
-        updateState(reduced)
-        when (event) {
-            is Loading -> {
-                viewModelScope.launch {
-                    //Starting from the page 1 because of API
-                    getListOfArtsUseCase(page = 1, pageSize = PAGE_SIZE)
-                        .fold(
-                            onSuccess = { model ->
-                                onEvent(Loaded(ComposeMap(model)))
-                            },
-                            onError = { error -> onEvent(Error(error)) }
-                        )
-                }
+        init {
+            /**
+             * Trigger the loading event to fetch the initial data in case if state is lost
+             * for e.g. in case activity was destroyed and recreated.
+             * This was done instead of using savedStateHandle to restore the state because
+             * the size of the data could be large and we want to avoid TransactionTooLargeException
+             * due to Bundle size limit.
+             */
+            if (uiState.value.content.items.isEmpty()) {
+                onEvent(Loading)
             }
+        }
 
-            is LoadMore -> {
-                val currentState = uiState.value
-                if (!currentState.pagingState.endReached) {
-                    val nextPage = currentState.pagingState.page + 1
+        fun onEvent(event: ListOfArtsScreenEvents) {
+            val reduced = reducer(event)
+            updateState(reduced)
+            when (event) {
+                is Loading -> {
                     viewModelScope.launch {
-                        getListOfArtsUseCase(page = nextPage, pageSize = PAGE_SIZE)
+                        // Starting from the page 1 because of API
+                        getListOfArtsUseCase(page = 1, pageSize = PAGE_SIZE)
                             .fold(
                                 onSuccess = { model ->
-                                    val isEndReached = model.isEmpty() || model.values.all { it.isEmpty() }
-                                    val mergedData = mergeData(currentState.content.items.toMutableMap(), model)
-                                    onEvent(
-                                        ListOfArtsScreenEvents.LoadedMore(
-                                            content = ComposeMap(mergedData),
-                                            page = nextPage,
-                                            isEndReached = isEndReached
-                                        )
-                                    )
+                                    onEvent(Loaded(ComposeMap(model)))
                                 },
-                                onError = { error -> onEvent(PagingError(error)) }
+                                onError = { error -> onEvent(Error(error)) },
                             )
                     }
                 }
-            }
 
-            is ItemClicked -> {
-                viewModelScope.launch {
-                    navigator.navigate(Route.ArtsDetailsScreen(event.id))
+                is LoadMore -> {
+                    val currentState = uiState.value
+                    if (!currentState.pagingState.endReached) {
+                        val nextPage = currentState.pagingState.page + 1
+                        viewModelScope.launch {
+                            getListOfArtsUseCase(page = nextPage, pageSize = PAGE_SIZE)
+                                .fold(
+                                    onSuccess = { model ->
+                                        val isEndReached = model.isEmpty() || model.values.all { it.isEmpty() }
+                                        val mergedData = mergeData(currentState.content.items.toMutableMap(), model)
+                                        onEvent(
+                                            ListOfArtsScreenEvents.LoadedMore(
+                                                content = ComposeMap(mergedData),
+                                                page = nextPage,
+                                                isEndReached = isEndReached,
+                                            ),
+                                        )
+                                    },
+                                    onError = { error -> onEvent(PagingError(error)) },
+                                )
+                        }
+                    }
+                }
+
+                is ItemClicked -> {
+                    viewModelScope.launch {
+                        navigator.navigate(Route.ArtsDetailsScreen(event.id))
+                    }
+                }
+
+                else -> Unit
+            }
+        }
+
+        private fun mergeData(
+            mergedData: MutableMap<String, List<UiArtsObject>>,
+            model: Map<String, List<UiArtsObject>>,
+        ): MutableMap<String, List<UiArtsObject>> {
+            model.forEach { (author, items) ->
+                val existingItems = mergedData[author] ?: emptyList()
+                val existingIds = existingItems.map { it.id }.toSet()
+                val newUniqueItems = items.filterNot { it.id in existingIds }
+                if (newUniqueItems.isNotEmpty()) {
+                    mergedData[author] = existingItems + newUniqueItems
                 }
             }
 
-            else -> Unit
+            model.keys.forEach { author ->
+                if (!mergedData.containsKey(author)) {
+                    mergedData[author] = model[author] ?: emptyList()
+                }
+            }
+            return mergedData
         }
     }
-
-    private fun mergeData(
-        mergedData: MutableMap<String, List<UiArtsObject>>,
-        model: Map<String, List<UiArtsObject>>
-    ): MutableMap<String, List<UiArtsObject>> {
-        model.forEach { (author, items) ->
-            val existingItems = mergedData[author] ?: emptyList()
-            val existingIds = existingItems.map { it.id }.toSet()
-            val newUniqueItems = items.filterNot { it.id in existingIds }
-            if (newUniqueItems.isNotEmpty()) {
-                mergedData[author] = existingItems + newUniqueItems
-            }
-        }
-
-        model.keys.forEach { author ->
-            if (!mergedData.containsKey(author)) {
-                mergedData[author] = model[author] ?: emptyList()
-            }
-        }
-        return mergedData
-    }
-}

@@ -6,15 +6,19 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun NavigateBack(onClick: () -> Unit = {}) {
-    IconButton(onClick = onClick) {
+fun NavigateBack(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
+) {
+    IconButton(onClick = onClick, modifier = modifier) {
         Icon(
             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
             contentDescription = "Back",
-            tint = MaterialTheme.colorScheme.onSecondary
+            tint = MaterialTheme.colorScheme.onSecondary,
         )
     }
 }

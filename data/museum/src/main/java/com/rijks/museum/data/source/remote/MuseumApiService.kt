@@ -7,20 +7,18 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MuseumApiService {
-
     @GET("api/{culture}/collection")
     suspend fun getListOfArts(
         @Path("culture") culture: String,
         @Query("p") page: Int,
         @Query("ps") pageSize: Int,
         @Query("s") sorting: String = "artist",
-        @Query("imgonly") imageOnly: Boolean = true
+        @Query("imgonly") imageOnly: Boolean = true,
     ): ListOfArtsResponse
 
     @GET("api/{culture}/collection/{object-number}")
     suspend fun getArtDetails(
         @Path("culture") culture: String,
-        @Path("object-number") objectNumber: String
+        @Path("object-number") objectNumber: String,
     ): ArtObjectDetailsResponse
-
 }

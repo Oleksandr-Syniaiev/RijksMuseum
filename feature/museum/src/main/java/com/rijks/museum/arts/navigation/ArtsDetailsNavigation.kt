@@ -8,7 +8,10 @@ import androidx.navigation.toRoute
 import com.rijks.museum.arts.ui.details.ArtsDetailsScreen
 import com.rijks.museum.core.ui.navigation.Route
 
-fun NavHostController.navigateToArtsDetailsScreen(artId: String, navOptions: NavOptions? = null) {
+fun NavHostController.navigateToArtsDetailsScreen(
+    artId: String,
+    navOptions: NavOptions? = null,
+) {
     this.navigate(Route.ArtsDetailsScreen(artId), navOptions)
 }
 

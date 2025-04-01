@@ -19,7 +19,7 @@ private val DarkColorScheme =
         secondary = DeepPurple100,
         tertiary = Pink200,
         background = BlueGrey900,
-        onSecondary = Color.White
+        onSecondary = Color.White,
     )
 
 private val LightColorScheme =
@@ -29,7 +29,7 @@ private val LightColorScheme =
         secondary = Grey700,
         tertiary = Brown500,
         background = Grey200,
-        onSecondary = Color.White
+        onSecondary = Color.White,
     )
 
 @SuppressLint("ObsoleteSdkInt")

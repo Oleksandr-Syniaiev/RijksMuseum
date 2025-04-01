@@ -23,7 +23,7 @@ data class LoadingState(
 data class PagingState(
     val endReached: Boolean = false,
     val page: Int = 1,
-    val totalSize: Int = 0
+    val totalSize: Int = 0,
 )
 
 @Stable

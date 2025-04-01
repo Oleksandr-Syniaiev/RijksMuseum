@@ -21,34 +21,44 @@ import com.rijks.museum.arts.R
 import com.rijks.museum.core.utils.errors.DataError
 
 @Composable
-fun LoadingError(error: DataError, onClick: () -> Unit) {
+fun LoadingError(
+    error: DataError,
+    onClick: () -> Unit,
+) {
     when (error) {
-        DataError.Network.NO_INTERNET -> TextError(
-            stringResource(R.string.no_internet_error),
-            onClick
-        )
+        DataError.Network.NO_INTERNET ->
+            TextError(
+                stringResource(R.string.no_internet_error),
+                onClick,
+            )
 
-        DataError.Network.SERVER_ERROR -> TextError(
-            stringResource(R.string.server_error),
-            onClick
-        )
+        DataError.Network.SERVER_ERROR ->
+            TextError(
+                stringResource(R.string.server_error),
+                onClick,
+            )
 
-        DataError.Network.UNKNOWN -> TextError(
-            stringResource(R.string.unknown_error),
-            onClick
-        )
+        DataError.Network.UNKNOWN ->
+            TextError(
+                stringResource(R.string.unknown_error),
+                onClick,
+            )
     }
 }
 
 @Composable
-private fun TextError(text: String, onClick: () -> Unit) {
+private fun TextError(
+    text: String,
+    onClick: () -> Unit,
+) {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .verticalScroll(rememberScrollState())
-            .padding(16.dp),
-        contentAlignment = Alignment.Center
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .fillMaxHeight()
+                .verticalScroll(rememberScrollState())
+                .padding(16.dp),
+        contentAlignment = Alignment.Center,
     ) {
         Column {
             Text(
@@ -56,19 +66,19 @@ private fun TextError(text: String, onClick: () -> Unit) {
                 color = MaterialTheme.colorScheme.onPrimary,
                 style = MaterialTheme.typography.headlineLarge,
                 textAlign = Center,
-                modifier = Modifier
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
             Button(
                 onClick = onClick,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
             ) {
                 Text(
                     text = stringResource(R.string.retry_button_text),
                     color = MaterialTheme.colorScheme.onSecondary,
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleLarge,
                 )
             }
         }
@@ -78,5 +88,8 @@ private fun TextError(text: String, onClick: () -> Unit) {
 @Preview
 @Composable
 fun LoadingErrorPreview() {
-    LoadingError(DataError.Network.NO_INTERNET, onClick = {})
+    LoadingError(
+        error = DataError.Network.NO_INTERNET,
+        onClick = {},
+    )
 }

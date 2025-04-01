@@ -14,5 +14,5 @@ data class WebImage(
     @SerializedName("url")
     val url: String?,
     @SerializedName("width")
-    val width: Int
+    val width: Int,
 )

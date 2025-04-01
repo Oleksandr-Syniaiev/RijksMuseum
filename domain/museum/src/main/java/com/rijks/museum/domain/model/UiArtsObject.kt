@@ -8,18 +8,20 @@ data class UiArtsObject(
     val title: String,
     val image: String,
     val author: String,
-    val objectNumber: String
+    val objectNumber: String,
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString().orEmpty(),
         parcel.readString().orEmpty(),
         parcel.readString().orEmpty(),
         parcel.readString().orEmpty(),
-        parcel.readString().orEmpty()
-    ) {
-    }
+        parcel.readString().orEmpty(),
+    )
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
+    override fun writeToParcel(
+        parcel: Parcel,
+        flags: Int,
+    ) {
         parcel.writeString(id)
         parcel.writeString(title)
         parcel.writeString(image)
