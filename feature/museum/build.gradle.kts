@@ -43,8 +43,8 @@ dependencies {
     implementation(libs.hilt.android)
 
     // Coil
-    implementation(libs.coil)
     implementation(libs.coil.compose)
+    implementation(libs.coil.network)
 
     // Testing
     testImplementation(project(":core:testing"))

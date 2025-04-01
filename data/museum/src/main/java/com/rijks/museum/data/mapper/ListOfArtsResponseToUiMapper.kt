@@ -10,7 +10,10 @@ object ListOfArtsResponseToUiMapper : Mapper<ListOfArtsResponse, List<UiArtsObje
         from.artObjects.map {
             UiArtsObject(
                 id = it.id,
-                title = it.title
+                title = it.title,
+                image = it.webImage?.url.orEmpty(),
+                author = it.principalOrFirstMaker,
+                objectNumber = it.objectNumber
             )
         }
 }

@@ -11,7 +11,8 @@ fun NavHostController.navigateToListOfArtsScreen(navOptions: NavOptions? = null)
     this.navigate(Route.ListOfArtsScreen, navOptions)
 }
 
-fun NavGraphBuilder.listOfArtsScreen() {
+fun NavGraphBuilder.listOfArtsScreen(
+) {
     composable<Route.ListOfArtsScreen> {
         ListOfArtsScreen()
     }

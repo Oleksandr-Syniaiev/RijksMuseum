@@ -12,7 +12,7 @@ data class WebImage(
     @SerializedName("offsetPercentageY")
     val offsetPercentageY: Int,
     @SerializedName("url")
-    val url: String,
+    val url: String?,
     @SerializedName("width")
     val width: Int
 )

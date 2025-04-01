@@ -22,13 +22,17 @@ class MuseumRemoteDataSourceModule {
     }
 
     @Provides
-    fun providesOkHttpClient(): OkHttpClient =
-        OkHttpClient.Builder()
-            .addInterceptor(
-                HttpLoggingInterceptor().also {
-                    it.level = HttpLoggingInterceptor.Level.BODY
-                },
-            )
+    fun providesOkHttpClient(): OkHttpClient {
+        var builder = OkHttpClient.Builder()
+        if (BuildConfig.DEBUG) {
+            builder = builder
+                .addInterceptor(
+                    HttpLoggingInterceptor().also {
+                        it.level = HttpLoggingInterceptor.Level.BODY
+                    },
+                )
+        }
+        return builder
             .addInterceptor { chain ->
                 val url = chain.request().url.newBuilder()
                     .addQueryParameter(KEY_PARAMETER, BuildConfig.API_KEY)
@@ -40,6 +44,7 @@ class MuseumRemoteDataSourceModule {
                 chain.proceed(request)
             }
             .build()
+    }
 
     @Provides
     @Named("museumRetrofit")

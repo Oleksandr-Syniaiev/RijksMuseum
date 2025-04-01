@@ -1,5 +1,6 @@
 package com.rijks.museum.data.source.remote
 
+import com.rijks.museum.data.source.remote.model.ArtObjectDetailsResponse
 import com.rijks.museum.data.source.remote.model.ListOfArtsResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -15,4 +16,11 @@ interface MuseumApiService {
         @Query("s") sorting: String = "artist",
         @Query("imgonly") imageOnly: Boolean = true
     ): ListOfArtsResponse
+
+    @GET("api/{culture}/collection/{object-number}")
+    suspend fun getArtDetails(
+        @Path("culture") culture: String,
+        @Path("object-number") objectNumber: String
+    ): ArtObjectDetailsResponse
+
 }

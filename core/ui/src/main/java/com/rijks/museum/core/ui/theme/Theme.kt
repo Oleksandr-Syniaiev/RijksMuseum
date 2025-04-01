@@ -9,21 +9,27 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme =
     darkColorScheme(
-        primary = Indigo500,
-        secondary = BlueGrey100,
-        tertiary = Blue400,
+        primary = Purple100,
+        onPrimary = Grey50,
+        secondary = DeepPurple100,
+        tertiary = Pink200,
+        background = BlueGrey900,
+        onSecondary = Color.White
     )
 
 private val LightColorScheme =
     lightColorScheme(
-        primary = BlueGrayDark,
-        secondary = Blue100,
-        tertiary = Indigo700,
-        background = BlueGrayNeutral
+        primary = DeepPurple700,
+        onPrimary = DeepPurple400,
+        secondary = Grey700,
+        tertiary = Brown500,
+        background = Grey200,
+        onSecondary = Color.White
     )
 
 @SuppressLint("ObsoleteSdkInt")

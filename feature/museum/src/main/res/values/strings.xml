@@ -1,0 +1,13 @@
+<resources>
+    <string name="toolbar_list_title">List of Arts</string>
+    <string name="toolbar_details_title">Art Details</string>
+
+    <string name="retry_button_text">Retry</string>
+
+    <string name="no_internet_error">No internet connection</string>
+    <string name="server_error">Sorry, server is unavailable, try again later</string>
+    <string name="unknown_error">Sorry, something went wrong</string>
+
+    <string name="pagination_failed_text">Failed to load data</string>
+    <string name="try_again_pagination_action_text">Try again</string>
+</resources>

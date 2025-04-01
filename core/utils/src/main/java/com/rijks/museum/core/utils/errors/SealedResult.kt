@@ -36,7 +36,6 @@ suspend fun <S : Any, E : Any> wrapThrowable(
     }
 }
 
-
 fun <S : Any, E : Any, R : Any> SealedResult<S, E>.fold(
     onSuccess: (S) -> R,
     onError: (E) -> R
@@ -44,5 +43,14 @@ fun <S : Any, E : Any, R : Any> SealedResult<S, E>.fold(
     return when (this) {
         is SealedResult.Failure -> onError(error)
         is SealedResult.Success -> onSuccess(value)
+    }
+}
+
+suspend fun <SuccessType : Any, ErrorType : Any, SuccessType1 : Any> SealedResult<SuccessType, ErrorType>.map(
+    block: suspend (SuccessType) -> SuccessType1
+): SealedResult<SuccessType1, ErrorType> {
+    return when (this) {
+        is SealedResult.Failure -> this
+        is SealedResult.Success -> SealedResult.success(block(this.value))
     }
 }

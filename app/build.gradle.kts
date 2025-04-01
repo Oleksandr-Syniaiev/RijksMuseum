@@ -63,11 +63,13 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
 
+    // Coil
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network)
+
     implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.timber)
-
-    implementation(libs.splashscreen)
 
     detektPlugins(libs.detekt.ruleset.compose)
 

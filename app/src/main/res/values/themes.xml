@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="Theme.AlbertHeijnApp.Splash" parent="Theme.SplashScreen">
-        <!-- Customize via windowSplashScreenBackground or windowSplashScreenAnimatedIcon -->
-        <item name="postSplashScreenTheme">@style/Theme.AlbertHeijnApp</item>
-    </style>
-
     <style name="Theme.AlbertHeijnApp" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>
