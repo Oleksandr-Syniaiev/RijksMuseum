@@ -3,9 +3,11 @@ package com.rijks.museum.arts.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.Error
+import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.HideError
 import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.ItemClicked
 import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.LoadMore
 import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.Loaded
+import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.LoadedMore
 import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.Loading
 import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.PagingError
 import com.rijks.museum.arts.ui.reducers.ListOfArtsReducer
@@ -17,8 +19,9 @@ import com.rijks.museum.core.ui.utils.UiStateHolder
 import com.rijks.museum.core.ui.utils.states.ComposeMap
 import com.rijks.museum.core.ui.utils.states.emptyComposeMap
 import com.rijks.museum.core.utils.errors.fold
-import com.rijks.museum.domain.model.UiArtsObject
+import com.rijks.museum.core.utils.errors.map
 import com.rijks.museum.domain.usecase.GetGroupedListOfArtsUseCase
+import com.rijks.museum.domain.usecase.MergePagingDataUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,6 +31,7 @@ class ListOfArtsViewModel
     @Inject
     constructor(
         val getListOfArtsUseCase: GetGroupedListOfArtsUseCase,
+        private val mergePagingDataUseCase: MergePagingDataUseCase,
         val reducer: ListOfArtsReducer,
         private val navigator: Navigator,
     ) : ViewModel(),
@@ -74,15 +78,22 @@ class ListOfArtsViewModel
                         val nextPage = currentState.pagingState.page + 1
                         viewModelScope.launch {
                             getListOfArtsUseCase(page = nextPage, pageSize = PAGE_SIZE)
+                                .map { model ->
+                                    val isEndReached = model.isEmpty() || model.values.all { it.isEmpty() }
+                                    val mergedData =
+                                        mergePagingDataUseCase.invoke(
+                                            currentState.content.items.toMutableMap(),
+                                            model,
+                                        )
+                                    PagingData(mergedData, isEndReached)
+                                }
                                 .fold(
-                                    onSuccess = { model ->
-                                        val isEndReached = model.isEmpty() || model.values.all { it.isEmpty() }
-                                        val mergedData = mergeData(currentState.content.items.toMutableMap(), model)
+                                    onSuccess = { data ->
                                         onEvent(
-                                            ListOfArtsScreenEvents.LoadedMore(
-                                                content = ComposeMap(mergedData),
+                                            LoadedMore(
+                                                content = ComposeMap(data.data),
                                                 page = nextPage,
-                                                isEndReached = isEndReached,
+                                                isEndReached = data.isEndReached,
                                             ),
                                         )
                                     },
@@ -97,29 +108,8 @@ class ListOfArtsViewModel
                         navigator.navigate(Route.ArtsDetailsScreen(event.id))
                     }
                 }
-
-                else -> Unit
+                // Handled by state reducer
+                is Error, is HideError, is Loaded, is LoadedMore, is PagingError -> Unit
             }
-        }
-
-        private fun mergeData(
-            mergedData: MutableMap<String, List<UiArtsObject>>,
-            model: Map<String, List<UiArtsObject>>,
-        ): MutableMap<String, List<UiArtsObject>> {
-            model.forEach { (author, items) ->
-                val existingItems = mergedData[author] ?: emptyList()
-                val existingIds = existingItems.map { it.id }.toSet()
-                val newUniqueItems = items.filterNot { it.id in existingIds }
-                if (newUniqueItems.isNotEmpty()) {
-                    mergedData[author] = existingItems + newUniqueItems
-                }
-            }
-
-            model.keys.forEach { author ->
-                if (!mergedData.containsKey(author)) {
-                    mergedData[author] = model[author] ?: emptyList()
-                }
-            }
-            return mergedData
         }
     }

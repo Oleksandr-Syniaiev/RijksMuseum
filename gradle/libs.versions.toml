@@ -109,6 +109,7 @@ org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kot
 detekt-core = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt"}
 # Serialization
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-parcelable = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 
 # Custom plugins
 base-library-kotlin = { id = "base.library.kotlin", version = "unspecified" }

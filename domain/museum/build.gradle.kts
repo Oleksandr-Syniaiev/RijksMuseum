@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.base.library.android)
     alias(libs.plugins.org.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlin.parcelable)
     alias(libs.plugins.ksp)
 }
 

@@ -43,8 +43,6 @@ console-reports:
 
 output-reports:
   active: true
-  exclude:
-  # - 'TxtOutputReport'
   # - 'XmlOutputReport'
   # - 'HtmlOutputReport'
   # - 'MdOutputReport'
@@ -128,7 +126,7 @@ complexity:
     threshold: 600
   LongMethod:
     active: true
-    threshold: 60
+    threshold: 100
   LongParameterList:
     active: true
     functionThreshold: 15

@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.org.jetbrains.kotlin.jvm) apply false
     alias(libs.plugins.detekt.core)
+    alias(libs.plugins.kotlin.parcelable) apply false
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.compose.compiler)
 }
