@@ -1,4 +1,4 @@
-package com.rijks.museum.arts.ui
+package com.rijks.museum.arts.ui.list
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
@@ -18,7 +18,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.rijks.museum.arts.R
-import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.LoadMore
 import com.rijks.museum.arts.ui.components.AuthorHeader
 import com.rijks.museum.arts.ui.components.BaseToolbar
 import com.rijks.museum.arts.ui.components.ItemContent
@@ -26,6 +25,7 @@ import com.rijks.museum.arts.ui.components.Loading
 import com.rijks.museum.arts.ui.components.LoadingError
 import com.rijks.museum.arts.ui.components.PagingErrorItem
 import com.rijks.museum.arts.ui.components.PagingLoadingIndicator
+import com.rijks.museum.arts.ui.list.ListOfArtsScreenEvents.LoadMore
 import com.rijks.museum.arts.ui.state.ErrorState
 import com.rijks.museum.arts.ui.state.ListOfArtsScreenState
 import com.rijks.museum.core.ui.theme.RijksMuseumAppTheme
@@ -53,6 +53,9 @@ private fun LisOfArtsScreenContent(
     onEvent: (ListOfArtsScreenEvents) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    LaunchedEffect(key1 = true) {
+        onEvent(ListOfArtsScreenEvents.Loading)
+    }
     Scaffold(topBar = {
         BaseToolbar(stringResource(R.string.toolbar_list_title))
     }) { contentPadding ->

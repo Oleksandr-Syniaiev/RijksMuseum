@@ -1,4 +1,4 @@
-package com.rijks.museum.arts.ui
+package com.rijks.museum.arts.ui.list
 
 import com.rijks.museum.domain.model.UiArtsObject
 

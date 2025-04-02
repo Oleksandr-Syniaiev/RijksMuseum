@@ -1,0 +1,5 @@
+allowUnusedVersions: false
+allowUnusedVersionReferences:
+  - versions.compileSdk
+  - versions.minSdk
+  - versions.targetSdk 

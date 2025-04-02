@@ -1,13 +1,13 @@
 package com.rijks.museum.arts.ui.reducers
 
-import com.rijks.museum.arts.ui.ListOfArtsScreenEvents
-import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.Error
-import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.HideError
-import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.ItemClicked
-import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.LoadMore
-import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.LoadedMore
-import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.Loading
-import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.PagingError
+import com.rijks.museum.arts.ui.list.ListOfArtsScreenEvents
+import com.rijks.museum.arts.ui.list.ListOfArtsScreenEvents.Error
+import com.rijks.museum.arts.ui.list.ListOfArtsScreenEvents.HideError
+import com.rijks.museum.arts.ui.list.ListOfArtsScreenEvents.ItemClicked
+import com.rijks.museum.arts.ui.list.ListOfArtsScreenEvents.LoadMore
+import com.rijks.museum.arts.ui.list.ListOfArtsScreenEvents.LoadedMore
+import com.rijks.museum.arts.ui.list.ListOfArtsScreenEvents.Loading
+import com.rijks.museum.arts.ui.list.ListOfArtsScreenEvents.PagingError
 import com.rijks.museum.arts.ui.state.ErrorState
 import com.rijks.museum.arts.ui.state.ListOfArtsScreenState
 import com.rijks.museum.arts.ui.state.LoadingState

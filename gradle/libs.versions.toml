@@ -1,4 +1,5 @@
 [versions]
+# Used in custom plugins,Gradle doesn't recognize that custom plugins are using the version reference
 compileSdk = "35"
 minSdk = "31"
 targetSdk = "35"

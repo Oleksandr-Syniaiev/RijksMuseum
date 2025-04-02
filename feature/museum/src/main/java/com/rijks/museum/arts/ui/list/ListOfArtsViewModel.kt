@@ -1,15 +1,15 @@
-package com.rijks.museum.arts.ui
+package com.rijks.museum.arts.ui.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.Error
-import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.HideError
-import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.ItemClicked
-import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.LoadMore
-import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.Loaded
-import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.LoadedMore
-import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.Loading
-import com.rijks.museum.arts.ui.ListOfArtsScreenEvents.PagingError
+import com.rijks.museum.arts.ui.list.ListOfArtsScreenEvents.Error
+import com.rijks.museum.arts.ui.list.ListOfArtsScreenEvents.HideError
+import com.rijks.museum.arts.ui.list.ListOfArtsScreenEvents.ItemClicked
+import com.rijks.museum.arts.ui.list.ListOfArtsScreenEvents.LoadMore
+import com.rijks.museum.arts.ui.list.ListOfArtsScreenEvents.Loaded
+import com.rijks.museum.arts.ui.list.ListOfArtsScreenEvents.LoadedMore
+import com.rijks.museum.arts.ui.list.ListOfArtsScreenEvents.Loading
+import com.rijks.museum.arts.ui.list.ListOfArtsScreenEvents.PagingError
 import com.rijks.museum.arts.ui.reducers.ListOfArtsReducer
 import com.rijks.museum.arts.ui.state.ListOfArtsScreenState
 import com.rijks.museum.core.ui.navigation.Navigator
@@ -39,40 +39,31 @@ class ListOfArtsViewModel
             ListOfArtsScreenState(content = emptyComposeMap()),
         ) {
         companion object {
-            private const val PAGE_SIZE = 20
-        }
-
-        init {
-            /**
-             * Trigger the loading event to fetch the initial data in case if state is lost
-             * for e.g. in case activity was destroyed and recreated.
-             * This was done instead of using savedStateHandle to restore the state because
-             * the size of the data could be large and we want to avoid TransactionTooLargeException
-             * due to Bundle size limit.
-             */
-            if (uiState.value.content.items.isEmpty()) {
-                onEvent(Loading)
-            }
+            const val PAGE_SIZE = 20
+            const val START_PAGE = 1
         }
 
         fun onEvent(event: ListOfArtsScreenEvents) {
             val reduced = reducer(event)
-            updateState(reduced)
             when (event) {
                 is Loading -> {
-                    viewModelScope.launch {
-                        // Starting from the page 1 because of API
-                        getListOfArtsUseCase(page = 1, pageSize = PAGE_SIZE)
-                            .fold(
-                                onSuccess = { model ->
-                                    onEvent(Loaded(ComposeMap(model)))
-                                },
-                                onError = { error -> onEvent(Error(error)) },
-                            )
+                    if (uiState.value.content.items.isEmpty()) {
+                        updateState(reduced)
+                        viewModelScope.launch {
+                            // Starting from the page 1 because of API
+                            getListOfArtsUseCase(page = START_PAGE, pageSize = PAGE_SIZE)
+                                .fold(
+                                    onSuccess = { model ->
+                                        onEvent(Loaded(ComposeMap(model)))
+                                    },
+                                    onError = { error -> onEvent(Error(error)) },
+                                )
+                        }
                     }
                 }
 
                 is LoadMore -> {
+                    updateState(reduced)
                     val currentState = uiState.value
                     if (!currentState.pagingState.endReached) {
                         val nextPage = currentState.pagingState.page + 1
@@ -104,12 +95,13 @@ class ListOfArtsViewModel
                 }
 
                 is ItemClicked -> {
+                    updateState(reduced)
                     viewModelScope.launch {
                         navigator.navigate(Route.ArtsDetailsScreen(event.id))
                     }
                 }
                 // Handled by state reducer
-                is Error, is HideError, is Loaded, is LoadedMore, is PagingError -> Unit
+                is Error, is HideError, is Loaded, is LoadedMore, is PagingError -> updateState(reduced)
             }
         }
     }

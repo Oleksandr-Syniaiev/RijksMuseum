@@ -28,9 +28,9 @@ class ArtDetailsViewModel
             ArtDetailsScreenState(content = UiArtDetails()),
         ) {
         companion object {
-            private const val ART_ID_KEY = "art_id"
-            private const val HAS_LOADED_KEY = "has_loaded"
-            private const val ART_CONTENT_KEY = "art_content"
+            const val ART_ID_KEY = "art_id"
+            const val HAS_LOADED_KEY = "has_loaded"
+            const val ART_CONTENT_KEY = "art_content"
         }
 
         init {

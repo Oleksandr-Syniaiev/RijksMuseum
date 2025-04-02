@@ -1,4 +1,4 @@
-package com.rijks.museum.arts.ui
+package com.rijks.museum.arts.ui.list
 
 import androidx.compose.runtime.Stable
 import com.rijks.museum.core.ui.utils.states.ComposeMap
