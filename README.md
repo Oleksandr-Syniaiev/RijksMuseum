@@ -31,7 +31,7 @@ The application follows Clean Architecture principles and is organized into the 
 - **Navigation**: Jetpack Navigation Compose
 - **Image Loading**: Coil
 - **Networking**: Retrofit with OkHttp
-- **Serialization**: Gson & Kotlin Serialization
+- **Serialization**: Kotlin Serialization
 - **Code Quality**: Detekt, Ktlint
 - **Concurrency**: Kotlin Coroutines and Flow
 
