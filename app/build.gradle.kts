@@ -1,3 +1,6 @@
+import com.base.plugins.extensions.buildVersionCode
+import com.base.plugins.extensions.buildVersionName
+
 plugins {
     alias(libs.plugins.base.application)
     alias(libs.plugins.org.jetbrains.kotlin.android)
@@ -12,8 +15,8 @@ android {
 
     defaultConfig {
         applicationId = "com.rijks.museum"
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = buildVersionCode
+        versionName = buildVersionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

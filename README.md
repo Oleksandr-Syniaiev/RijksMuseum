@@ -91,6 +91,27 @@ The project uses Detekt and Ktlint for static code analysis. Run the checks with
 ./gradlew ktlintCheck  # Run Ktlint
 ```
 
+## Versioning
+
+The application follows a versioning system defined in `build-system/plugins/src/main/resources/version/version.properties`:
+
+```
+MAJOR=2025
+MINOR=04
+PATCH=0
+BUILD=0
+VERSION_CODE=1
+```
+
+Versioning follows these conventions:
+- **MAJOR**: Represents the year of release
+- **MINOR**: Represents the month of release
+- **PATCH**: Increments for bug fixes and changes
+- **BUILD**: Increments for each build within the same version
+- **VERSION_CODE**: Android's internal version number 
+
+To update the version for a new release, modify the appropriate values in the version.properties file.
+
 ## License
 
 This project is a code assessment and is not licensed for public use.
